@@ -1,5 +1,5 @@
 # COS214-testing-framework
-The documentation and useage of the testing framework functions used in COS214
+The documentation and usage of the testing framework functions used in COS214
 As this is a template there is a lot of power but we must make use of a bunch of overloading like ==
 
 ## makefile
