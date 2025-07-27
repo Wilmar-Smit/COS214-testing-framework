@@ -28,3 +28,7 @@ clean:
 valgrind:	$(BIN)
 	valgrind --leak-check=full --track-origins=yes ./$(BIN)
 ```
+
+## Test suite commands
+== runs equals test
+TC runs text compare between object 1 and 2
