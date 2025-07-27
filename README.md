@@ -30,5 +30,5 @@ valgrind:	$(BIN)
 ```
 
 ## Test suite commands
-== runs equals test
-TC runs text compare between object 1 and 2
+== runs equals test  
+TC runs text compare between object 1 and 2  
