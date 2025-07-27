@@ -34,4 +34,6 @@ valgrind:	$(BIN)
 TC runs text compare between object 1 and 2  
 
 
-The main idea is to automate some testing by assigning objects to it that it maintains. At any stage these items can change. It would be wise to make mementos for the items in the suites so that states can be retrieved for each suite.  
+The main idea is to automate some testing by assigning objects to it that it maintains. At any stage these items can change. It would be wise to make mementos for the items in the suites so that states can be retrieved for each suite. 
+
+Testing functions should also be added to allow for testing to be external, for each type of test make a lhs and rhs version that runs within the suite to update values too. 
