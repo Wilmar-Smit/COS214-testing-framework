@@ -3,18 +3,19 @@
 template <class T>
 Array<T>::Array(int length)
 {
-    array = new T *[length];
+    array = new T *[length]();
     this->length = length;
+
 }
 template <class T>
-Array<T>::Array(T *items, int length)
+Array<T>::Array(Array<T> &copy)
 {
-    this->length = length;
-    array = new T *[length];
+    array = new T *[copy.length]();
+    this->length = copy.length;
+
     for (int i = 0; i < length; i++)
     {
-        array[i] = new T(items[i]);
-        // call copy constructor
+        array[i] = new T(*copy[i]);
     }
 }
 
@@ -58,7 +59,7 @@ void Array<T>::increaseSizeBy(int increaseBy)
         length = newLength;
     }
     else
-        throw out_of_range(RED + "Array cannot have its size increased by negative number" + RESET);
+        throw out_of_range("Array cannot have its size increased by negative number");
 }
 
 template <class T>
@@ -78,7 +79,7 @@ void Array<T>::setLength(int newLength)
         length = newLength;
     }
     else
-        throw out_of_range(RED + "Array length must be greater than 0" + RESET);
+        throw out_of_range("Array length must be greater than 0");
 }
 
 template <class T>
@@ -90,7 +91,7 @@ T *Array<T>::getIndex(int i)
     }
     else
     {
-        throw out_of_range(RED + "Array index cannot be less than 0 or greater than length" + RESET);
+        throw out_of_range("Array index cannot be less than 0 or greater than length");
     }
 }
 template <class T>
@@ -102,7 +103,7 @@ T *Array<T>::operator[](int i)
     }
     else
     {
-        throw out_of_range(RED + "Array index cannot be less than 0 or greater than length" + RESET);
+        throw out_of_range("Array index cannot be less than 0 or greater than length");
     }
 }
 template <class T>

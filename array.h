@@ -1,10 +1,7 @@
 #ifndef ARRAY_H
 #define ARRAY_H
 
-#define RED "\033[31m"
-#define YELLOW "\033[33m"
-#define RESET "\033[0m"
-#define GREEN "\033[32m"
+
 #include <stdexcept>
 using namespace std;
 template <class T>
@@ -13,7 +10,7 @@ class Array
 public:
     int length;
     Array(int length);
-    Array(T *items, int length);
+    Array(Array<T>& copy);
     ~Array();
 
     void deleteAll();
