@@ -28,14 +28,3 @@ clean:
 valgrind:	$(BIN)
 	valgrind --leak-check=full --track-origins=yes ./$(BIN)
 ```
-
-## Textfile format
-outlines tests done per-suite 
-several tests will be put in currently only 
-==
-
-```plain
-TS[n] <TS = test suite and [n] for the number of the suite>
-== <will run the == test>
-end <this will end the testing for TS [n]>
-```

@@ -7,6 +7,18 @@ Array<T>::Array(int length)
     this->length = length;
 }
 template <class T>
+Array<T>::Array(T *items, int length)
+{
+    this->length = length;
+    array = new T *[length];
+    for (int i = 0; i < length; i++)
+    {
+        array[i] = new T(items[i]);
+        // call copy constructor
+    }
+}
+
+template <class T>
 Array<T>::~Array()
 {
     deleteAll();
