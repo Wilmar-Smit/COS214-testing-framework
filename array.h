@@ -17,13 +17,13 @@ public:
     void increaseSizeBy(int increaseBy);
     void setLength(int length);
 
-    T *getIndex(int i);
-    T *operator[](int i);
+    T &getIndex(int i);
+    T &operator[](int i);
 
-    void insertNewItem(T *newItem);
+    void insertNewItem(T &newItem);
 
 private:
-    T **array;
+    T *array;
 };
 #include "array.cpp"
 

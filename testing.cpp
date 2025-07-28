@@ -1,7 +1,5 @@
 #include "testing.h"
 
-string printGreen(int &index, string tstString, string corString);
-string printRed(int &index, string tstString, string corString);
 string to_string(string obj)
 {
     return obj;
@@ -46,22 +44,22 @@ Suite<T, J>::Suite(Array<string> testsToRun, T *testObj, J *correctObj, string s
 
     this->passes = 0;
     this->fails = 0;
-    this->testObj = testObj;
-    this->correctObj = correctObj;
+    this->testObj = new T(*testObj);
+    this->correctObj = new J(*correctObj);
     this->suiteName = suiteName;
-    cout<<"\nStarting test suite "<<suiteName<<endl;
+    cout << "\nStarting test suite " << suiteName << endl;
     for (int i = 0; i < testsToRun.length; i++)
     {
 
-        if (*testsToRun[i] == "==")
+        if (testsToRun[i] == "==")
             equalsTest();
-        else if (*testsToRun[i] == "TC")
+        else if (testsToRun[i] == "TC")
         {
             textCompare();
         }
-        else if ((testsToRun[i])->substr(0, 3) == "TC=")
+        else if ((testsToRun[i]).substr(0, 3) == "TC=")
         {
-            string testStr = testsToRun[i]->substr(4, testsToRun[i]->length() - 1);
+            string testStr = testsToRun[i].substr(4, testsToRun[i].length() - 1);
             testCompare(testStr);
         }
     }
@@ -71,7 +69,8 @@ Suite<T, J>::~Suite()
 {
     // dont delete testobj and correctObj
 
-    cout << this->suiteName << " Finished with " << passes << " passes and " << fails << " fails\n" << endl;
+    cout << this->suiteName << " Finished with " << passes << " passes and " << fails << " fails\n"
+         << endl;
 }
 // prints the states upon deletion
 // requires that T and J have to_String() overloaded
@@ -97,10 +96,9 @@ void Suite<T, J>::textCompare()
         }
     }
 
-    
     if (tstString.length() != output.length())
     {
-        output += YELLOW+tstString.substr(index,tstString.length() -index) +RESET;
+        output += YELLOW + tstString.substr(index, tstString.length() - index) + RESET;
     }
 
     if (testPassed)
@@ -112,41 +110,34 @@ void Suite<T, J>::textCompare()
 
 template <class T, class J>
 void Suite<T, J>::testCompare(string testAgainst)
-{ /*
-     string tstString = to_string(*testObj);
-     string corString = testAgainst;
-     string output = "";
-     bool testPassed = true;
-     int index = 0;
-     while (index < tstString.length() && index < corString.length())
-     {
-         if (tstString[index] == corString[index])
-             output += printGreen(index, tstString, corString);
-         else
-         {
-             output += printRed(index, tstString, corString);
-             testPassed = false;
-             fails++;
-         }
-     }
-
-     if (testPassed)
-         passes++;
-     cout << output << endl;
-     */
+{
 }
 
 template <class T, class J>
 void Suite<T, J>::equalsTest()
 {
+    cout << "Starting equals test" << endl;
+    if (*testObj == *correctObj)
+    {
+        passes++;
+        cout << "Items are equal" << endl;
+    }
+    else
+    {
+        fails++;
+        cout << "Items are not equal" << endl;
+    }
+
+    cout << "ending equals test" << endl;
 }
 template <class T, class J>
 template <class X, class Y>
-void Suite<T, J>::equalsTest(X lhs, Y rhs)
+void Suite<T, J>::equalsTest(X lhs, Y rhs) // makes use of a copy constuctor
 {
 }
 
-string printGreen(int &index, string tstString, string corString)
+template <class T, class J>
+string Suite<T, J>::printGreen(int &index, string tstString, string corString)
 {
     string output = GREEN;
     while (index < tstString.length() && index < corString.length() && tstString[index] == corString[index])
@@ -157,7 +148,8 @@ string printGreen(int &index, string tstString, string corString)
     output += RESET;
     return output;
 }
-string printRed(int &index, string tstString, string corString)
+template <class T, class J>
+string Suite<T, J>::printRed(int &index, string tstString, string corString)
 {
     string output = RED;
     while (index < tstString.length() && index < corString.length() && tstString[index] != corString[index])
