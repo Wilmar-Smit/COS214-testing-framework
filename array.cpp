@@ -115,3 +115,24 @@ void Array<T>::insertNewItem(T &newItem)
         array[length - 1] = newItem;
     }
 }
+
+template <class T>
+int Array<T>::getLength() const
+{
+    return length;
+}
+
+template <class T>
+string to_string(Array<T> array)
+{
+    string obj = "[ ";
+    for (int i = 0; i < array.getLength(); i++)
+    {
+
+        obj += to_string(array[i]);
+        if (i != array.getLength - 1)
+            obj += ", ";
+    }
+
+    obj += "]" return obj;
+}

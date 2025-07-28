@@ -1,9 +1,6 @@
 #include "testing.h"
 
-string to_string(string obj)
-{
-    return obj;
-}
+
 // ############################ testing code ############################
 template <class T, class J>
 testing<T, J>::testing(T *testObject, J *correctObject) : testObject(testObject), correctObject(correctObject)
@@ -39,16 +36,15 @@ void testing<T, J>::createTestSuite(string SuiteName, Array<string> testsToRun)
 
 // ################################ Suite code ############################################
 template <class T, class J>
-Suite<T, J>::Suite(Array<string> testsToRun, T *testObj, J *correctObj, string suiteName)
+Suite<T, J>::Suite(Array<string> testsToRun, T *testObj, J *correctObj, string suiteName) : testObj(*testObj), correctObj(*correctObj)
 {
 
     this->passes = 0;
     this->fails = 0;
-    this->testObj = new T(*testObj);
-    this->correctObj = new J(*correctObj);
+
     this->suiteName = suiteName;
     cout << "\nStarting test suite " << suiteName << endl;
-    for (int i = 0; i < testsToRun.length; i++)
+    for (int i = 0; i < testsToRun.getLength(); i++)
     {
 
         if (testsToRun[i] == "==")
@@ -68,7 +64,6 @@ template <class T, class J>
 Suite<T, J>::~Suite()
 {
     // dont delete testobj and correctObj
-
     cout << this->suiteName << " Finished with " << passes << " passes and " << fails << " fails\n"
          << endl;
 }
@@ -78,8 +73,8 @@ template <class T, class J>
 void Suite<T, J>::textCompare()
 {
     cout << "Running text compare" << endl;
-    string tstString = to_string(*testObj);
-    string corString = to_string(*correctObj);
+    string tstString = to_string(testObj);
+    string corString = to_string(correctObj);
     string output = "";
     bool testPassed = true;
     int index = 0;
@@ -117,7 +112,7 @@ template <class T, class J>
 void Suite<T, J>::equalsTest()
 {
     cout << "Starting equals test" << endl;
-    if (*testObj == *correctObj)
+    if (testObj == correctObj)
     {
         passes++;
         cout << "Items are equal" << endl;

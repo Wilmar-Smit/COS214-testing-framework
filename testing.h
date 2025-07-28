@@ -1,7 +1,6 @@
 #ifndef TESTING_H
 #define TESTING_H
 #include <iostream>
-#include <fstream>
 #include <string>
 #include "array.h"
 using namespace std;
@@ -13,6 +12,11 @@ using namespace std;
 
 template <class T, class J>
 class Suite;
+
+string to_string(string obj)
+{
+    return obj;
+}
 
 template <class T, class J>
 class testing
@@ -41,11 +45,14 @@ class Suite
 private:
     int passes, fails, testsNeeded;
     string suiteName;
+
     // Array<T> *statesTestObj;
     // Array<J> *statesCorrectObj;
     // requires overloading of the copy constructor or the = operator
-    T* testObj;
-    J* correctObj;
+
+    T testObj;
+    J correctObj;
+    // copy of the pointers made initially
 
 public:
     Suite(Array<string> testsToRun, T *testObj, J *correctObj, string suiteName = "Test");
@@ -60,8 +67,8 @@ public:
     template <class X, class Y>
     static void equalsTest(X lhs, Y rhs);
 
-    T *getTest();
-    T *getCorrectObj();
+    T getTestObj();
+    J *getCorrectObj();
     void setTest(T *testObj);
     void setCorrect(T *corrObj);
     string printGreen(int &index, string tstString, string corString);
