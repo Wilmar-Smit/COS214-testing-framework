@@ -12,8 +12,9 @@ int main()
     cout << to_string(arr1) << endl;
 
     Array<int> arr2(10);
+
     arr2 = arr1;
-    cout << to_string(arr2)<<endl;
+   cout << to_string(arr2)<<endl;
 
 
 

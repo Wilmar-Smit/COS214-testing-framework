@@ -1,6 +1,5 @@
 #include "testing.h"
 
-
 // ############################ testing code ############################
 template <class T, class J>
 testing<T, J>::testing(T *testObject, J *correctObject) : testObject(testObject), correctObject(correctObject)
@@ -43,7 +42,7 @@ Suite<T, J>::Suite(Array<string> testsToRun, T *testObj, J *correctObj, string s
     this->fails = 0;
 
     this->suiteName = suiteName;
-    cout << +RED"\nStarting test suite " << suiteName +RESET<< endl;
+    cout << +RED "\nStarting test suite " << suiteName + RESET << endl;
     for (int i = 0; i < testsToRun.getLength(); i++)
     {
 
@@ -86,8 +85,12 @@ void Suite<T, J>::textCompare()
         else
         {
             output += printRed(index, tstString, corString);
-            fails++;
-            testPassed = false;
+
+            if (testPassed)
+            {
+                fails++;
+                testPassed = false;
+            }
         }
     }
 
@@ -100,7 +103,8 @@ void Suite<T, J>::textCompare()
         passes++;
 
     cout << "The output was " << output << "\nThe output should be " << GREEN << corString << RESET << endl;
-    cout << "Text compare finished\n" << endl;
+    cout << "Text compare finished\n"
+         << endl;
 }
 
 template <class T, class J>
@@ -115,15 +119,16 @@ void Suite<T, J>::equalsTest()
     if (testObj == correctObj)
     {
         passes++;
-        cout << "Items are equal" << endl;
+        cout << GREEN << "Items are equal" << RESET << endl;
     }
     else
     {
         fails++;
-        cout << "Items are not equal" << endl;
+        cout << RED << "Items are not equal" << RESET << endl;
     }
 
-    cout << "ending equals test\n" << endl;
+    cout << "ending equals test\n"
+         << endl;
 }
 template <class T, class J>
 template <class X, class Y>
