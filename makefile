@@ -1,24 +1,20 @@
+CXX = g++
+CXXFLAGS = -std=c++11 -Wall
 
-CXX := g++
-CXXFLAGS := -g -std=c++11
+SRCS = main.cpp testing.cpp
+OBJS = $(SRCS:.cpp=.o)
 
-SRC := main.cpp  #<cpp files to run> do not put testing.cpp here
-OBJ := $(SRC:.cpp=.o)
-BIN := TestingFramework
+TARGET = test_runner
 
-all: $(BIN)
+all: $(TARGET)
 
-$(BIN):	$(OBJ)
-	$(CXX) $(CXXFLAGS) -o $@ $^
+$(TARGET): $(OBJS)
+	$(CXX) $(CXXFLAGS) -o $(TARGET) $(OBJS)
 
-%.o:	%.cpp
+%.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-run:	$(BIN)
-	./$(BIN)
-
 clean:
-	rm -f $(OBJ) $(BIN)
- 
-valgrind:	$(BIN)
-	valgrind --leak-check=full --track-origins=yes ./$(BIN)
+	rm -f $(OBJS) $(TARGET)
+
+.PHONY: all clean
