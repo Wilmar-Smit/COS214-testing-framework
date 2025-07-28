@@ -95,7 +95,53 @@ T &Array<T>::operator[](int i)
     }
 }
 template <class T>
-void Array<T>::insertNewItem(T &newItem)
+const T &Array<T>::operator[](int i) const
+{
+    if (i >= 0 && i < length)
+    {
+        return array[i];
+    }
+    else
+    {
+        throw out_of_range("Array index cannot be less than 0 or greater than length");
+    }
+}
+
+template <class T>
+Array<T> &Array<T>::operator=(const Array<T> rhs)
+{
+    if (this == &rhs)
+    {
+        return *this;
+    }
+    this->length = rhs.length;
+    delete[] array;
+    array = new T[length];
+    for (int i = 0; i < rhs.length; i++)
+    {
+        array[i] = rhs[i];
+    }
+
+    return *this;
+}
+
+template <class T>
+bool Array<T>::operator==(const Array<T> rhs)
+{
+    if (length != rhs.length)
+        return false;
+
+    for (int i = 0; i < rhs.length;i++)
+    {
+        if (array[i] != rhs[i])
+            return false;
+    }
+
+    return true;
+}
+
+template <class T>
+void Array<T>::insertNewItem(T newItem)
 {
     bool foundSpace = false;
     for (int i = 0; i < length; i++)
@@ -130,9 +176,10 @@ string to_string(Array<T> array)
     {
 
         obj += to_string(array[i]);
-        if (i != array.getLength - 1)
+        if (i != array.getLength() - 1)
             obj += ", ";
     }
 
-    obj += "]" return obj;
+    obj += " ]";
+    return obj;
 }
