@@ -14,11 +14,11 @@ $(BIN):	$(OBJ)
 %.o:	%.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-run:	$(BIN)
+run r:	$(BIN)
 	./$(BIN)
 
-clean:
+clean c:
 	rm -f $(OBJ) $(BIN)
  
-valgrind:	$(BIN)
+valgrind v:	$(BIN)
 	valgrind --leak-check=full --track-origins=yes ./$(BIN)
