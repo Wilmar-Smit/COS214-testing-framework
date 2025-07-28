@@ -43,7 +43,7 @@ Suite<T, J>::Suite(Array<string> testsToRun, T *testObj, J *correctObj, string s
     this->fails = 0;
 
     this->suiteName = suiteName;
-    cout << "\nStarting test suite " << suiteName << endl;
+    cout << +RED"\nStarting test suite " << suiteName +RESET<< endl;
     for (int i = 0; i < testsToRun.getLength(); i++)
     {
 
@@ -72,7 +72,7 @@ Suite<T, J>::~Suite()
 template <class T, class J>
 void Suite<T, J>::textCompare()
 {
-    cout << "Running text compare" << endl;
+    cout << "\nRunning text compare" << endl;
     string tstString = to_string(testObj);
     string corString = to_string(correctObj);
     string output = "";
@@ -100,7 +100,7 @@ void Suite<T, J>::textCompare()
         passes++;
 
     cout << "The output was " << output << "\nThe output should be " << GREEN << corString << RESET << endl;
-    cout << "Text compare finished" << endl;
+    cout << "Text compare finished\n" << endl;
 }
 
 template <class T, class J>
@@ -111,7 +111,7 @@ void Suite<T, J>::testCompare(string testAgainst)
 template <class T, class J>
 void Suite<T, J>::equalsTest()
 {
-    cout << "Starting equals test" << endl;
+    cout << "\nStarting equals test" << endl;
     if (testObj == correctObj)
     {
         passes++;
@@ -123,7 +123,7 @@ void Suite<T, J>::equalsTest()
         cout << "Items are not equal" << endl;
     }
 
-    cout << "ending equals test" << endl;
+    cout << "ending equals test\n" << endl;
 }
 template <class T, class J>
 template <class X, class Y>
