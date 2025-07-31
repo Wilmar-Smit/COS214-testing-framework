@@ -54,7 +54,7 @@ void Array<T>::increaseSizeBy(int increaseBy)
 template <class T>
 void Array<T>::setLength(int newLength)
 {
-    // will delete all data inside the array
+    // will delete all data inside the array   
     if (newLength > 0)
     {
         delete[] array;

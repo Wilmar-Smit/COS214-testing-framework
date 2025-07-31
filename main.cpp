@@ -22,12 +22,14 @@ int main()
     }
 
     cout << to_string(arr1) << endl;
-
     Array<int> arr2(10);
+    
+    Suite<Array<int>, Array<int>> suiteArrBefore(arrStr, &arr1, &arr2, "Testing arrays in the suite");
+
     arr2 = arr1;
 
     cout << to_string(arr2) << endl;
-    Suite<Array<int>, Array<int>> suiteArr(arrStr, &arr1, &arr2, "Testing arrays in the suite");
+    Suite<Array<int>, Array<int>> suiteArrAfter(arrStr, &arr1, &arr2, "Testing arrays in the suite");
 
     delete test1;
     delete test2;
