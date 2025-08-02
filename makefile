@@ -1,24 +1,26 @@
+CXX = g++
+CXXFLAGS = -Wall -Wextra -std=c++17 -g
 
-CXX := g++
-CXXFLAGS := -g -std=c++11
+SRC = main.cpp Logger.cpp CLI.cpp CLIConstants.cpp array.cpp testing.cpp
+OBJ = $(SRC:.cpp=.o)
+EXEC = main
 
-SRC := main.cpp  #<cpp files to run> do not put testing.cpp here
-OBJ := $(SRC:.cpp=.o)
-BIN := TestingFramework
+all: $(EXEC)
 
-all: $(BIN)
+$(EXEC): $(OBJ)
+	$(CXX) $(CXXFLAGS) -o $(EXEC) $(OBJ)
 
-$(BIN):	$(OBJ)
-	$(CXX) $(CXXFLAGS) -o $@ $^
-
-%.o:	%.cpp
+%.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-run r:	$(BIN)
-	./$(BIN)
+run: all
+	./$(EXEC)
 
-clean c:
-	rm -f $(OBJ) $(BIN)
- 
-valgrind v:	$(BIN)
-	valgrind --leak-check=full --track-origins=yes ./$(BIN)
+clean:
+	rm -f $(OBJ) $(EXEC)
+
+leaks: all
+	leaks --atExit -- ./$(EXEC) || true
+
+valgrind: all
+	valgrind --leak-check=full --show-leak-kinds=all ./$(EXEC)

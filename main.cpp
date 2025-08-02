@@ -1,37 +1,13 @@
-#include "testing.h"
-// ironically used to test the testing framework
-int main()
-{
-    Array<string> arrStr(1);
-    arrStr.insertNewItem("TC");
-    arrStr.insertNewItem("==");
+#include "Logger.h"
+#include "CLI.h"
 
-    string *test1 = new string("107100");
-    string *test2 = new string("109");
-
-    // testing basic strings
-    Suite<string, string> suiteString(arrStr, test1, test2, "basic compare");
-
-    // testing the array class
-    cout << "Array testing \n"
-         << endl;
-    Array<int> arr1(5);
-    for (int i = 0; i < 5; i++)
-    {
-        arr1[i] = i;
-    }
-
-    cout << to_string(arr1) << endl;
-    Array<int> arr2(10);
+int main() {
+    Logger* logger = Logger::getInstance("cli.log");
+    logger->info("Starting CLI application");
     
-    Suite<Array<int>, Array<int>> suiteArrBefore(arrStr, &arr1, &arr2, "Testing arrays in the suite");
-
-    arr2 = arr1;
-
-    cout << to_string(arr2) << endl;
-    Suite<Array<int>, Array<int>> suiteArrAfter(arrStr, &arr1, &arr2, "Testing arrays in the suite");
-
-    delete test1;
-    delete test2;
+    CLI& cli = CLI::getInstance();
+    cli.run();
+    
+    logger->info("CLI application terminated");
     return 0;
 }
