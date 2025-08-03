@@ -3,30 +3,36 @@
 template <class T>
 Array<T>::Array(int length)
 {
-    array = new T[length]();
+    array = new T *[length]();
     this->length = length;
 }
 template <class T>
 Array<T>::Array(Array<T> &copy)
 {
-    array = new T[copy.length]();
+    array = new T *[copy.length]();
     this->length = copy.length;
 
     for (int i = 0; i < length; i++)
     {
-        array[i] = copy[i];
+        if (copy[i])
+            array[i] = new T(*copy[i]);
+    }
+}
+template <class T>
+void Array<T>::deleteAll()
+{
+    for (int i = 0; i < length; i++)
+    {
+        if (array[i])
+            delete array[i];
     }
 }
 
 template <class T>
 Array<T>::~Array()
 {
+    deleteAll();
     delete[] array;
-}
-
-template <class T>
-void Array<T>::deleteAll()
-{
 }
 
 template <class T>
@@ -35,13 +41,14 @@ void Array<T>::increaseSizeBy(int increaseBy)
     if (increaseBy > 0)
     {
         int newLength = length + increaseBy;
-        T *n_array = new T[newLength]();
+        T **n_array = new T *[newLength]();
 
         for (int i = 0; i < length; i++)
         {
-            n_array[i] = array[i];
+            n_array[i] = new T(*array[i]); //  uses copy constructor
         }
 
+        deleteAll();
         delete[] array;
 
         array = n_array;
@@ -54,9 +61,10 @@ void Array<T>::increaseSizeBy(int increaseBy)
 template <class T>
 void Array<T>::setLength(int newLength)
 {
-    // will delete all data inside the array   
+    // will delete all data inside the array
     if (newLength > 0)
     {
+        deleteAll();
         delete[] array;
         array = new T[newLength];
         for (int i = 0; i < newLength; i++)
@@ -71,7 +79,7 @@ void Array<T>::setLength(int newLength)
 }
 
 template <class T>
-T &Array<T>::getIndex(int i)
+T *Array<T>::getIndex(int i)
 {
     if (i >= 0 && i < length)
     {
@@ -83,7 +91,7 @@ T &Array<T>::getIndex(int i)
     }
 }
 template <class T>
-T &Array<T>::operator[](int i)
+T *Array<T>::operator[](int i)
 {
     if (i >= 0 && i < length)
     {
@@ -95,7 +103,7 @@ T &Array<T>::operator[](int i)
     }
 }
 template <class T>
-const T &Array<T>::operator[](int i) const
+const T *Array<T>::operator[](int i) const
 {
     if (i >= 0 && i < length)
     {
@@ -114,12 +122,16 @@ Array<T> &Array<T>::operator=(const Array<T> rhs)
     {
         return *this;
     }
-    this->length = rhs.length;
+
+    deleteAll();
     delete[] array;
-    array = new T[length];
+
+    this->length = rhs.length;
+    array = new T *[length];
+
     for (int i = 0; i < rhs.length; i++)
     {
-        array[i] = rhs[i];
+        array[i] = new T(*rhs[i]);
     }
 
     return *this;
@@ -129,14 +141,20 @@ template <class T>
 bool Array<T>::operator==(const Array<T> rhs)
 {
     if (length != rhs.length)
-        return false;
-
-    for (int i = 0; i < rhs.length;i++)
     {
-        if (array[i] != rhs[i])
-            return false;
+
+        return false;
     }
 
+    for (int i = 0; i < rhs.length; i++)
+    {
+
+        if (*array[i] != *rhs[i])
+        {
+            return false;
+        }
+    }
+    
     return true;
 }
 
@@ -146,19 +164,20 @@ void Array<T>::insertNewItem(T newItem)
     bool foundSpace = false;
     for (int i = 0; i < length; i++)
     {
-        if (array[i] == T())
+        if (array[i] == NULL)
         {
-            array[i] = newItem;
+            array[i] = new T(newItem);
             foundSpace = true;
             break;
         }
     }
+
     if (foundSpace)
         return;
     else
     {
         increaseSizeBy(1);
-        array[length - 1] = newItem;
+        array[length - 1] = new T(newItem);
     }
 }
 
@@ -174,8 +193,12 @@ string to_string(Array<T> array)
     string obj = "[ ";
     for (int i = 0; i < array.getLength(); i++)
     {
-
-        obj += to_string(array[i]);
+        if (array[i])
+        {
+            obj += to_string(*array[i]);
+        }
+        else
+            obj += "NULL";
         if (i != array.getLength() - 1)
             obj += ", ";
     }

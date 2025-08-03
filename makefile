@@ -18,7 +18,7 @@ run r:	$(BIN)
 	./$(BIN)
 
 clean c:
-	rm -f $(OBJ) $(BIN)
+	rm -f $(OBJ) $(BIN) vgcore.*
  
 valgrind v:	$(BIN)
 	valgrind --leak-check=full --track-origins=yes ./$(BIN)

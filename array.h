@@ -17,19 +17,19 @@ public:
     void increaseSizeBy(int increaseBy);
     void setLength(int length);
 
-    T &getIndex(int i);
-    T &operator[](int i);
-    const T &operator[](int i) const;
+    T *getIndex(int i);
+    T *operator[](int i);
+    const T *operator[](int i) const;
 
-    
     Array<T> &operator=(const Array<T> rhs);
     bool operator==(const Array<T> rhs);
 
     int getLength() const;
     void insertNewItem(T newItem);
+    void insertNewItem(T *newItem);
 
 private:
-    T *array;
+    T **array;
     int length;
 };
 
