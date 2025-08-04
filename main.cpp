@@ -3,8 +3,8 @@
 int main()
 {
     Array<string> arrStr(1);
-    arrStr.insertNewItem("TC");
-    arrStr.insertNewItem("==");
+    arrStr.insert("TC");
+    arrStr.insert("==");
 
     string test1 = ("107100");
     string test2 = ("109");
@@ -32,11 +32,10 @@ int main()
     cout << to_string(arr2) << endl;
     Suite<Array<int>, Array<int>> suiteArrAfter(arrStr, arr1, arr2, "Testing arrays in the Testing class");
 
-    testing<string, string> *Ts = new testing<string, string>(test1, test2);
+    Testing<string, string> *Ts = new Testing<string, string>(test1, test2);
     Ts->createTestSuite(arrStr, "basic compare in TS object");
 
-    
-    testing<Array<int>, Array<int>>*TsArr = new testing <Array<int>, Array<int>>(arr2, arr1);
+    Testing<Array<int>, Array<int>> *TsArr = new Testing<Array<int>, Array<int>>(arr2, arr1);
     TsArr->createTestSuite(arrStr, "Arr compare in TSarr object");
 
     delete Ts;

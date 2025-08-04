@@ -1,5 +1,5 @@
-#ifndef TESTING_H
-#define TESTING_H
+#ifndef Testing_H
+#define Testing_H
 #include <iostream>
 #include <string>
 #include "array.h"
@@ -26,11 +26,9 @@ string to_string(string obj)
 }
 
 template <class T, class J>
-class testing
+class Testing
 {
 private:
-    int passes;
-    int fails;
     T *testObject; // used for the start of all tests as a base
     // make a new test object copy
     J *correctObject; // used for the start of all tests as a base
@@ -41,11 +39,11 @@ private:
     // there will also be single value checks made as static functions for specific unit checks
 
 public:
-    testing(T testObject, J correctObject);
-    ~testing();
+    Testing(T testObject, J correctObject);
+    ~Testing();
     T *getTestObj();
     J *getCorrectObj();
-
+    Suite<T, J> *getSuite(int i);
     void createTestSuite(Array<string> testsToRun, string suiteName = "Test");
 };
 

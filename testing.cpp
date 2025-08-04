@@ -1,18 +1,16 @@
 #include "testing.h"
 
-// ############################ testing code ############################
+// ############################ Testing code ############################
 template <class T, class J>
-testing<T, J>::testing(T testObject, J correctObject)
+Testing<T, J>::Testing(T testObject, J correctObject)
 {
-    this->passes = 0;
-    this->fails = 0;
     this->testObject = new T(testObject);
     this->correctObject = new J(correctObject);
     testSuites = new Array<Suite<T, J>>(0);
 }
 
 template <class T, class j>
-testing<T, j>::~testing()
+Testing<T, j>::~Testing()
 {
     delete testObject;
     delete correctObject;
@@ -20,21 +18,26 @@ testing<T, j>::~testing()
 }
 
 template <class T, class J>
-T *testing<T, J>::getTestObj()
+T *Testing<T, J>::getTestObj()
 {
     return testObject;
 }
 
 template <class T, class J>
-J *testing<T, J>::getCorrectObj()
+J *Testing<T, J>::getCorrectObj()
 {
     return correctObject;
 }
 template <class T, class J>
-void testing<T, J>::createTestSuite(Array<string> testsToRun, string suiteName)
+void Testing<T, J>::createTestSuite(Array<string> testsToRun, string suiteName)
 {
     Suite<T, J> nSuite(testsToRun, testObject, correctObject, suiteName);
     testSuites->insertNewItem(nSuite);
+}
+template <class T, class J>
+Suite<T, J> *Testing<T, J>::getSuite(int i)
+{
+    return testSuites[i];
 }
 
 // ################################ Suite code ############################################
