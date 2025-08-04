@@ -21,11 +21,11 @@ public:
     T *operator[](int i);
     const T *operator[](int i) const;
 
-    Array<T> &operator=(const Array<T> rhs);
-    bool operator==(const Array<T> rhs);
+    Array<T> &operator=(const Array<T> &rhs);
+    bool operator==(const Array<T> &rhs);
 
     int getLength() const;
-    void insertNewItem(T newItem);
+    void insertNewItem(T &newItem);
 
 private:
     T **array;

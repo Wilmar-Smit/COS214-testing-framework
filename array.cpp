@@ -116,7 +116,7 @@ const T *Array<T>::operator[](int i) const
 }
 
 template <class T>
-Array<T> &Array<T>::operator=(const Array<T> rhs)
+Array<T> &Array<T>::operator=(const Array<T>&rhs)
 {
     if (this == &rhs)
     {
@@ -138,7 +138,7 @@ Array<T> &Array<T>::operator=(const Array<T> rhs)
 }
 
 template <class T>
-bool Array<T>::operator==(const Array<T> rhs)
+bool Array<T>::operator==(const Array<T> &rhs)
 {
     if (length != rhs.length)
     {
@@ -159,7 +159,7 @@ bool Array<T>::operator==(const Array<T> rhs)
 }
 
 template <class T>
-void Array<T>::insertNewItem(T newItem)
+void Array<T>::insertNewItem(T &newItem)
 {
     bool foundSpace = false;
     for (int i = 0; i < length; i++)
