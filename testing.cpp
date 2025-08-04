@@ -42,7 +42,7 @@ Suite<T, J> *Testing<T, J>::getSuite(int i)
 
 // ################################ Suite code ############################################
 template <class T, class J>
-Suite<T, J>::Suite(Array<string> testsToRun, T *testObj, J *correctObj, string suiteName)
+Suite<T, J>::Suite(Array<string> &testsToRun, T *testObj, J *correctObj, string suiteName)
 {
 
     this->passes = 0;
@@ -53,7 +53,7 @@ Suite<T, J>::Suite(Array<string> testsToRun, T *testObj, J *correctObj, string s
     runTests(testsToRun);
 }
 template <class T, class J>
-Suite<T, J>::Suite(Array<string> testsToRun, T testObj, J correctObj, string suiteName)
+Suite<T, J>::Suite(Array<string> &testsToRun, T testObj, J correctObj, string suiteName)
 {
 
     this->passes = 0;
@@ -74,7 +74,7 @@ Suite<T, J>::Suite(Suite<T, J> &copy)
 }
 
 template <class T, class J>
-void Suite<T, J>::runTests(Array<string> testsToRun)
+void Suite<T, J>::runTests(Array<string>& testsToRun)
 {
     cout << +RED "\nStarting test suite " << suiteName + RESET << endl;
     for (int i = 0; i < testsToRun.getLength(); i++)

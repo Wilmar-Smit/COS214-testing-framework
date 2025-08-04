@@ -183,8 +183,8 @@ void Array<T>::insertNewItem(T &newItem)
 template <class T>
 void Array<T>::insert(T item)
 {
-    T item(newItem);
-    insertNewItem(item);
+    T itemIn(item);
+    insertNewItem(itemIn);
 }
 
 template <class T>
