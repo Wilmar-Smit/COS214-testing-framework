@@ -26,7 +26,6 @@ public:
 
     int getLength() const;
     void insertNewItem(T newItem);
-    void insertNewItem(T *newItem);
 
 private:
     T **array;

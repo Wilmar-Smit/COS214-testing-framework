@@ -63,28 +63,29 @@ private:
 public:
     Suite(Array<string> testsToRun, T *testObj, J *correctObj, string suiteName = "Test");
     Suite(Array<string> testsToRun, T testObj, J correctObj, string suiteName = "Test");
-    Suite(Suite<T,J> & copy);
+    Suite(Suite<T, J> &copy);
     ~Suite();
     // prints the states upon deletion
 
     void runTests(Array<string> testsToRun);
     void textCompare();
-    void testCompare(string testAgainst);
-
-    void equalsTest();
 
     template <class X, class Y>
-    static void equalsTest(X lhs, Y rhs);
+    void textCompare(X &lhs, Y &rhs);
+
+    void equalsTest();
+    template <class X, class Y>
+    void equalsTest(X &lhs, Y &rhs);
 
     T *getTestObj();
     J *getCorrectObj();
     void setTest(T *testObj);
-    void setCorrect(T *corrObj);
+    void setCorrect(J *corrObj);
 
     Suite<T, J> &operator=(Suite<T, J> &copy);
 
-    string printGreen(int &index, string tstString, string corString);
-    string printRed(int &index, string tstString, string corString);
+    static string printGreen(int &index, string tstString, string corString);
+    static string printRed(int &index, string tstString, string corString);
 };
 
 #include "testing.cpp"

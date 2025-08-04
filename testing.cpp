@@ -33,7 +33,7 @@ J *testing<T, J>::getCorrectObj()
 template <class T, class J>
 void testing<T, J>::createTestSuite(Array<string> testsToRun, string suiteName)
 {
-   Suite<T, J> nSuite(testsToRun, testObject, correctObject, suiteName);
+    Suite<T, J> nSuite(testsToRun, testObject, correctObject, suiteName);
     testSuites->insertNewItem(nSuite);
 }
 
@@ -83,10 +83,9 @@ void Suite<T, J>::runTests(Array<string> testsToRun)
         {
             textCompare();
         }
-        else if ((*testsToRun[i]).substr(0, 3) == "TC=")
+        else
         {
-            string testStr = testsToRun[i]->substr(4, testsToRun[i]->length() - 1);
-            testCompare(testStr);
+            cout << "Illegitimate string given" << endl;
         }
     }
 }
@@ -94,20 +93,24 @@ void Suite<T, J>::runTests(Array<string> testsToRun)
 template <class T, class J>
 Suite<T, J>::~Suite()
 {
-    // dont delete testobj and correctObj
-
     delete testObj;
     delete correctObj;
-
 }
 // prints the states upon deletion
 // requires that T and J have to_String() overloaded
 template <class T, class J>
 void Suite<T, J>::textCompare()
 {
+    textCompare(*testObj, *correctObj);
+}
+
+template <class T, class J>
+template <class X, class Y>
+void Suite<T, J>::textCompare(X &lhs, Y &rhs)
+{
     cout << "\nRunning text compare" << endl;
-    string tstString = to_string(*testObj);
-    string corString = to_string(*correctObj);
+    string tstString = to_string(lhs);
+    string corString = to_string(rhs);
     string output = "";
     bool testPassed = true;
     int index = 0;
@@ -142,15 +145,16 @@ void Suite<T, J>::textCompare()
 }
 
 template <class T, class J>
-void Suite<T, J>::testCompare(string testAgainst)
-{
-}
-
-template <class T, class J>
 void Suite<T, J>::equalsTest()
 {
+    equalsTest(*testObj, *correctObj);
+}
+template <class T, class J>
+template <class X, class Y>
+void Suite<T, J>::equalsTest(X &lhs, Y &rhs) // makes use of a copy constuctor
+{
     cout << "\nStarting equals test" << endl;
-    if (*testObj == *correctObj)
+    if (lhs == rhs)
     {
         passes++;
         cout << GREEN << "Items are equal" << RESET << endl;
@@ -163,11 +167,6 @@ void Suite<T, J>::equalsTest()
 
     cout << "ending equals test\n"
          << endl;
-}
-template <class T, class J>
-template <class X, class Y>
-void Suite<T, J>::equalsTest(X lhs, Y rhs) // makes use of a copy constuctor
-{
 }
 template <class T, class J>
 Suite<T, J> &Suite<T, J>::operator=(Suite<T, J> &copy)
@@ -213,4 +212,18 @@ string Suite<T, J>::printRed(int &index, string tstString, string corString)
 
     output += RESET;
     return output;
+}
+template <class T, class J>
+void Suite<T, J>::setTest(T *testObj)
+{
+
+    delete testObj;
+    testObj = new T(*testObj);
+    // makes a copy
+}
+template <class T, class J>
+void Suite<T, J>::setCorrect(J *corrObj)
+{
+    delete correctObj;
+    correctObj = new J(*correctObj);
 }
